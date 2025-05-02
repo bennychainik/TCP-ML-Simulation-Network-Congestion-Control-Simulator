@@ -1,4 +1,4 @@
-import context
+from . import context
 from src.device import Device
 from src.router import Router
 from src.hostml import HostML

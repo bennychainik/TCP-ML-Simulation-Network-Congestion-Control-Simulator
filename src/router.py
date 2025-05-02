@@ -1,4 +1,4 @@
-import context
+from . import context
 from src.device import Device, Device_Type
 from src.packet import Packet
 import random

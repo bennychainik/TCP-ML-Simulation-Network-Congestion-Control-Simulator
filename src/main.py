@@ -5,21 +5,17 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 net = NetworkML()
-net.add_host("1",16)
-net.add_host("2",16)
-net.add_host("3",16)
-net.add_host("4",16)
-net.add_host("6",16)
-net.add_host("7",16)
+net.add_host("1", 16, tcp_variant="reno")   # TCP Reno
+net.add_host("2", 16, tcp_variant="vegas")  # TCP Vegas
+net.add_host("3", 16, tcp_variant="tahoe")  # TCP Tahoe 
+
 
 net.add_router("5",16)
 
 net.link("1","5")
 net.link("2","5")
 net.link("3","5")
-net.link("4","5")
-net.link("6","5")
-net.link("7","5")
+
 
 net.generate_forwarding_table_entries()
 
@@ -61,5 +57,5 @@ plt.plot(window_data)
 plt.title("Window Size")
 plt.xlabel("tick")
 plt.ylabel("window_size")
-plt.legend(['host1','host2','host3'])
+plt.legend(['host1 (Reno)', 'host2 (Vegas)', 'host3 (Tahoe)'])
 plt.show()

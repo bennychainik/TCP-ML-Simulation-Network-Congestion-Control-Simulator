@@ -1,4 +1,4 @@
-import context
+from . import context
 from src.device import Device
 from src.router import Router
 from src.host import Host
@@ -31,13 +31,14 @@ class Network():
         self.devices = dict()
         self.clock = 0
     
-    def add_host(self,ip:str,buffer_cap=5):
-        self.hosts[ip] = Host(ip,buffer_cap)
+    def add_host(self,ip:str,buffer_cap=5, tcp_variant="tahoe"):
+        self.hosts[ip] = Host(ip,buffer_cap, tcp_variant)
         self.devices[ip] = self.hosts[ip]
     
-    def add_router(self,ip:str,buffer_cap=5):
-        self.routers[ip] = Router(ip,buffer_cap)
+    def add_router(self, ip: str, buffer_cap=5):
+        self.routers[ip] = Router(ip, buffer_cap=buffer_cap)
         self.devices[ip] = self.routers[ip]
+
     
     def link(self,ip1:str,ip2:str):
         self.devices[ip1].link(self.devices[ip2])
@@ -58,3 +59,7 @@ class Network():
 
         for ip in self.hosts:
             self.devices[ip].step()
+
+    def run(self, duration=600):
+        for _ in range(duration):
+            self.step()
